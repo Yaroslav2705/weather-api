@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <title>Підписка на погоду</title>
+  <style>
+    body { font-family: sans-serif; max-width: 400px; margin: 2em auto; }
+    label { display: block; margin-top: 1em; }
+    input, select { width: 100%; padding: 0.5em; margin-top: 0.3em; }
+    button { margin-top: 1em; padding: 0.5em 1em; }
+    .msg { margin-top: 1em; color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Підписатися на оновлення погоди</h1>
+  <form id="subsForm">
+    <label>
+      Email:
+      <input type="email" name="email" required />
+    </label>
+    <label>
+      Місто:
+      <input type="text" name="city" required />
+    </label>
+    <label>
+      Частота:
+      <select name="frequency">
+        <option value="hourly">Щогодини</option>
+        <option value="daily">Щодня</option>
+      </select>
+    </label>
+    <button type="submit">Підписатися</button>
+  </form>
+  <div id="message" class="msg"></div>
+
+  <script>
+    const form = document.getElementById('subsForm');
+    const msg  = document.getElementById('message');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      msg.textContent = 'Відправка…';
+      msg.classList.remove('error');
+      const payload = {
+        email: form.email.value,
+        city: form.city.value,
+        frequency: form.frequency.value
+      };
+      try {
+        const res  = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error || json.message);
+        msg.textContent = json.message;
+      } catch (err) {
+        msg.textContent = 'Помилка: ' + err.message;
+        msg.classList.add('error');
+      }
+    });
+  </script>
+</body>
+</html>
+
