@@ -1,0 +1,27 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model City {
+  id            Int            @id @default(autoincrement())
+  name          String         @unique
+  externalId    String?        
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id         Int      @id @default(autoincrement())
+  email      String
+  frequency  String
+  token      String   @unique
+  confirmed  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  city       City     @relation(fields: [cityId], references: [id])
+  cityId     Int
+}
+

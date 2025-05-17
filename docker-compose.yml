@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  # локальный db–сервис больше не нужен, закомментируйте или удалите весь блок db
+  # db:
+  #   image: postgres:15-alpine
+  #   …
+
+  app:
+    build: .
+    # depends_on: [db]   # убираем зависимость
+    ports:
+      - "8080:8080"
+    # env_file: .env     # ← удаляем эту строку
+    environment:
+      # ТУТ автоматически подхватятся переменные из Railway UI
+      DATABASE_URL: "${DATABASE_URL}"
+      WEATHER_API_KEY: "${WEATHER_API_KEY}"
+      APP_URL:         "${APP_URL}"
+      SMTP_HOST:       "${SMTP_HOST}"
+      SMTP_PORT:       "${SMTP_PORT}"
+      SMTP_USER:       "${SMTP_USER}"
+      SMTP_PASS:       "${SMTP_PASS}"
+      SMTP_FROM:       "${SMTP_FROM}"
+    command: sh -c "npx prisma migrate deploy && node index.js"

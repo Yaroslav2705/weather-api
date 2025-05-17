@@ -1,0 +1,52 @@
+{
+  "name": "weather-forecast-api",
+  "version": "1.0.0",
+  "description": "Weather API application that allows users to subscribe to weather updates for their city.",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "npx prisma migrate deploy && node index.js",
+    "test": "jest"
+  },
+  "keywords": [
+    "openapi-generator",
+    "openapi"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "@prisma/client": "^6.7.0",
+    "axios": "^1.9.0",
+    "body-parser": "^1.19.0",
+    "camelcase": "^5.3.1",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.16.4",
+    "express-openapi-validator": "^4.13.8",
+    "js-yaml": "^3.3.0",
+    "node-cron": "^4.0.5",
+    "nodemailer": "^7.0.3",
+    "ono": "^5.0.1",
+    "openapi-sampler": "^1.0.0-beta.15",
+    "swagger-ui-express": "^4.0.2",
+    "winston": "^3.2.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "jest": "^29.7.0",
+    "mocha": "^7.1.1",
+    "prisma": "^6.7.0",
+    "supertest": "^7.1.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true
+    }
+  }
+}
